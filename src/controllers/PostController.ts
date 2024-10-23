@@ -49,3 +49,34 @@ export async function createPost(c: Context) {
     console.error(e);
   }
 }
+
+// Get Post by Id
+export async function getPostById(c: Context) {
+  try {
+    const id = parseInt(c.req.param("id"));
+    const post = await prisma.post.findUnique({
+      where: { id: id },
+    });
+
+    if (!post) {
+      return c.json(
+        {
+          success: false,
+          message: "Post not found",
+        },
+        404
+      );
+    }
+
+    return c.json(
+      {
+        success: true,
+        message: "Post fetched successfully",
+        data: post,
+      },
+      200
+    );
+  } catch (e: unknown) {
+    console.error(e);
+  }
+}
