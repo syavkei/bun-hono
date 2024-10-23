@@ -1,8 +1,9 @@
 import { Hono } from "hono";
-import { getPosts } from "../controllers/PostController";
+import { createPost, getPosts } from "../controllers/PostController";
 
 const router = new Hono();
 
 router.get("/", (c) => getPosts(c));
+router.post("/", (c) => createPost(c));
 
 export const Routes = router;
